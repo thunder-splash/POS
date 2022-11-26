@@ -11,6 +11,7 @@ const Employer = sequelize.define('employer',{
     grade: {type: STRING, defaultValue: "Джуниор"},
     birthdate: {type: DATE},
     tg: {type: STRING, allowNull: true},
+    img: {type: STRING, allowNull: false}
 })
 
 const About = sequelize.define('about', {
@@ -18,9 +19,14 @@ const About = sequelize.define('about', {
     name: {type: STRING},
 })
 
-const Projects = sequelize.define('projects', {
+const Projects = sequelize.define ('projects', {
     id: {type: INTEGER, autoIncrement: true, primaryKey: true},
-    name: {type: STRING, defaultValue: "Пока что не крутой"}
+    name: {type: STRING, defaultValue: "Пока что не в проекте"}
+})
+
+const BlackPage = sequelize.define ('blackpage', {
+    id: {type: INTEGER, autoIncrement: true, primaryKey: true},
+    BPid: {type: INTEGER}
 })
 
 Employer.hasMany(About)
@@ -29,8 +35,12 @@ About.belongsTo(Employer)
 Employer.hasMany(Projects)
 Projects.belongsTo(Employer)
 
+Employer.hasMany(BlackPage)
+BlackPage.belongsTo(Employer)
+
 module.exports = {
     Employer,
     About,
-    Projects
+    Projects,
+    BlackPage
 }

@@ -1,25 +1,25 @@
 const ApiError = require('../error/ApiError')
-const {About} = require('../models/models')
+const {BlackPage} = require('../models/models')
 
 
-class AboController {
+class BPController {
     async create (req, res) {
         const {name} = req.body
-        const pref = await About.create({name})
+        const pref = await BlackPage.create({name})
         return res.json(pref)
     }
 
     async getAll (req, res) {
-        const pref = await About.findAll()
+        const pref = await BlackPage.findAll()
         return res.json(pref)
     }
 
     async getOne (req, res) {
         const {id} = req.params
-        const ref = await About.findOne(
+        const ref = await BlackPage.findOne(
             {
                 where: {id},
-                include: [{model: About, as: 'info'}]
+                include: [{model: BlackPage, as: 'info'}]
             }
         )
         return res.json(ref)
@@ -27,7 +27,7 @@ class AboController {
 
     async delete (req, res, next) {
         const ToBeRemoved = req.body.name
-        const pref = await About.destroy({where: {name: ToBeRemoved}})
+        const pref = await BlackPage.destroy({where: {name: ToBeRemoved}})
         if (!pref){
             return next(ApiError.badRequest('Объект с таким именем не найден'))
         }
@@ -35,4 +35,4 @@ class AboController {
     }
 }
 
-module.exports = new AboController()
+module.exports = new BPController()
