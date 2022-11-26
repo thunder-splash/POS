@@ -22,11 +22,43 @@ class EmpController {
             return next(ApiError.badRequest('Пользователь с таким почтовым адесом уже существует'))
         }
         const hashPassword = await bcrypt.hash(password, 13)
-        const employer = await Employer.create({email, password: hashPassword})
+        const employer = await Employer.create({email, password: hashPassword, role})
         const token = generateJwt(employer.id, employer.email, employer.role)
         return res.json({token})
     }
 
+    async login(req, res, next) {
+        const {email, password} = req.body
+        const employer = await Employer.findOne({where: {email}})
+        if (!employer) {
+            return next(ApiError.internal('Пользователь с таким логином не найден!'))
+        }
+        let comparePassword = bcrypt.compareSync(password, employer.password)
+        if (!comparePassword) {
+            return next(ApiError.internal('Указан неверный пароль!'))
+        }
+        const token = generateJwt(employer.id, employer.email, employer.role)
+        return res.json({token})
+    }
+
+    async check(req, res) {
+            const token = generateJwt(req.employer.id, req.employer.email, req.employer.role)
+            return res.json({token})
+    }
+
+    async delete(req, res, next) {
+        const ToBeRemoved = req.body.email
+        const employer = await Employer.destroy({where: {email: ToBeRemoved}})
+        if (!employer) {
+            return next(ApiError.badRequest('Пользователь с такой почтой не найден'))
+        }
+        return res.json({message: 'Пользователь удалён успешно'})
+    }
+
+    async seethemall(req, res) {
+        const isee = await Employer.findAll()
+        return res.json(isee)
+    }
 }
 
 module.exports = new EmpController()
