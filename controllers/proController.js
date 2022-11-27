@@ -4,8 +4,8 @@ const {Projects} = require('../models/models')
 class ProController {
     async create (req, res) {
         const {name} = req.body
-        const pref = await Projects.create({name})
-        return res.json(pref)
+        const proj = await Projects.create({name})
+        return res.json(proj)
     }
 
     async getAll (req, res) {

@@ -55,6 +55,17 @@ class EmpController {
         return res.json({message: 'Пользователь удалён успешно'})
     }
 
+    async getOne (req, res) {
+        const {id} = req.params
+        const ref = await Employer.findOne(
+            {
+                where: {id},
+                include: [{model: Employer, as: 'info'}]
+            }
+        )
+        return res.json(ref)
+    }
+
     async seethemall(req, res) {
         const isee = await Employer.findAll()
         return res.json(isee)

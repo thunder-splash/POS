@@ -5,8 +5,8 @@ const {BlackPage} = require('../models/models')
 class BPController {
     async create (req, res) {
         const {name} = req.body
-        const pref = await BlackPage.create({name})
-        return res.json(pref)
+        const badp = await BlackPage.create({name})
+        return res.json(badp)
     }
 
     async getAll (req, res) {
