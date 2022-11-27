@@ -1,15 +1,12 @@
 const sequelize = require('../db')
-const {INTEGER, STRING, DATE} = require('sequelize')
+const {INTEGER, STRING} = require('sequelize')
 
 const Employer = sequelize.define('employer',{
     id: {type: INTEGER, autoIncrement: true, primaryKey: true},
     name: {type: STRING, defaultValue: "Иванов Иван Иванович"},
-    email: {type: STRING, unique: true},
-    password: {type: STRING, allowNull: false},
-    role: {type: STRING, defaultValue: "USER"},
     competence: {type: STRING, defaultValue: "Крутой сотрудник"},
     grade: {type: STRING, defaultValue: "Джуниор"},
-    birthdate: {type: DATE},
+    birthdate: {type: STRING},
     tg: {type: STRING, allowNull: true},
     img: {type: STRING, allowNull: false}
 })
