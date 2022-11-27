@@ -4,11 +4,13 @@ const {INTEGER, STRING} = require('sequelize')
 const Employer = sequelize.define('employer',{
     id: {type: INTEGER, autoIncrement: true, primaryKey: true},
     name: {type: STRING, defaultValue: "Иванов Иван Иванович"},
+    email: {type: STRING, unique: true},
+    password: {type: STRING, allowNull: false},
+    role: {type: STRING, defaultValue: "USER"},
     competence: {type: STRING, defaultValue: "Крутой сотрудник"},
     grade: {type: STRING, defaultValue: "Джуниор"},
     birthdate: {type: STRING},
-    tg: {type: STRING, allowNull: true},
-    img: {type: STRING, allowNull: false}
+    tg: {type: STRING, allowNull: true}
 })
 
 const About = sequelize.define('about', {
